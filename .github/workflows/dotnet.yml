@@ -12,19 +12,27 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+
     - name: Setup .NET
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
+
     - name: Install Chrome
       run: |
         sudo apt-get update
         sudo apt-get install -y google-chrome-stable
+
+    - name: Install ChromeDriver
+      run: sudo apt-get install -y chromium-chromedriver
+
     - name: Restore dependencies
       run: dotnet restore
+
     - name: Build
       run: dotnet build --no-restore
+
     - name: Test
       env:
-        CHROMEWEBDRIVER: /usr/bin/google-chrome
+        CHROMEWEBDRIVER: /usr/lib/chromium-browser/chromedriver
       run: dotnet test --verbosity normal
