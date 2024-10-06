@@ -26,12 +26,12 @@ public class TC01IfUserIsInvalidTryAgainTest
         options.AddArgument("--disable-gpu"); // Necessary in some environments
         options.AddArgument("--no-sandbox");  // For CI environments
         options.AddArgument("--disable-dev-shm-usage"); // Helps avoid some memory issues
-        var driver = new ChromeDriver(options);
+        //var driver = new ChromeDriver(options);
 
 
-        //driver = new ChromeDriver();
-        //js = (IJavaScriptExecutor)driver;
-        //vars = new Dictionary<string, object>();
+        driver = new ChromeDriver();
+        js = (IJavaScriptExecutor)driver;
+        vars = new Dictionary<string, object>();
     }
 
     [TearDown]
