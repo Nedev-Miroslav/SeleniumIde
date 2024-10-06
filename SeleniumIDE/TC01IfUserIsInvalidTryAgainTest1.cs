@@ -22,15 +22,16 @@ public class TC01IfUserIsInvalidTryAgainTest
     public void SetUp()
     {
         ChromeOptions options = new ChromeOptions();
-        options.AddArgument("headless");
-        options.AddArgument("no-sandbox");
-        options.AddArgument("disable-dev-shm-usage");
-        options.AddArgument("disable-gpu");
-        options.AddArgument("window-size=1920x1080");
+        options.AddArgument("--headless");
+        options.AddArgument("--disable-gpu"); // Necessary in some environments
+        options.AddArgument("--no-sandbox");  // For CI environments
+        options.AddArgument("--disable-dev-shm-usage"); // Helps avoid some memory issues
+        var driver = new ChromeDriver(options);
 
-        driver = new ChromeDriver();
-        js = (IJavaScriptExecutor)driver;
-        vars = new Dictionary<string, object>();
+
+        //driver = new ChromeDriver();
+        //js = (IJavaScriptExecutor)driver;
+        //vars = new Dictionary<string, object>();
     }
 
     [TearDown]
