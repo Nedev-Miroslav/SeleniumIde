@@ -18,13 +18,20 @@ jobs:
       with:
         dotnet-version: 6.0.x
 
-    - name: Install Chrome
+    - name: Install Google Chrome
       run: |
+        wget -q -O - https://dl.google.com/linux/linux_signing_key.pub | sudo apt-key add -
+        sudo sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list'
         sudo apt-get update
-        sudo apt-get install -y google-chrome-stable
+        sudo apt-get install google-chrome-stable
 
     - name: Install ChromeDriver
       run: sudo apt-get install -y chromium-chromedriver
+
+    - name: Verify Chrome installation
+      run: |
+        which google-chrome
+        google-chrome --version
 
     - name: Restore dependencies
       run: dotnet restore
@@ -34,5 +41,6 @@ jobs:
 
     - name: Test
       env:
+        CHROME_BIN: $(which google-chrome)
         CHROMEWEBDRIVER: /usr/lib/chromium-browser/chromedriver
       run: dotnet test --verbosity normal
